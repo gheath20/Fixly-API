@@ -12,7 +12,7 @@ class RequestController {
             }
         
             getOne = async (req, res) => {
-                const id = id.params.body;
+                const id = req.params.id;
                 const request = await Request.findById(id);
                 if (!request) return res.status(404).json(
                     {
@@ -40,7 +40,7 @@ class RequestController {
                         }
                     )
                 }
-                const requestAdd = await Request.create({ requesterName, rating, comment });
+                const requestAdd = await Request.create({ title, description, status, priority });
                 res.status(201).json(
                     {
                         "message": "Operation successful",
@@ -53,7 +53,7 @@ class RequestController {
             }
         
             update = async (req, res) => {
-                const id = id.params.body;
+                const id =req.params.id;
                 const request = await Request.findById(id);
                 if (!request) return res.status(404).json(
                     {
@@ -63,7 +63,7 @@ class RequestController {
                 );
                 const { title, description, status, priority } = req.body;
                 const date = await Request.findByIdAndUpdate(id, { title, description, status, priority });
-                res.status(201).json(
+                res.status(200).json(
                     {
                         "message": "Operation successful",
                         "data": date

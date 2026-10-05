@@ -12,7 +12,7 @@ class ReviewController{
         }
     
         getOne = async (req, res) => {
-            const id = id.params.body;
+            const id = req.params.id;
             const review = await Review.findById(id);
             if (!review) return res.status(404).json(
                 {
@@ -53,7 +53,7 @@ class ReviewController{
         }
     
         update = async (req, res) => {
-            const id = id.params.body;
+            const id = req.params.id;
             const review = await Review.findById(id);
             if (!review) return res.status(404).json(
                 {
@@ -63,7 +63,7 @@ class ReviewController{
             );
             const { reviewerName, rating, comment } = req.body;
             const date = await Review.findByIdAndUpdate(id, { reviewerName, rating, comment });
-            res.status(201).json(
+            res.status(200).json(
                 {
                     "message": "Operation successful",
                     "data": date

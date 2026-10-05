@@ -12,7 +12,7 @@ class CustomerController{
                 }
             
                 getOne = async (req, res) => {
-                    const id = id.params.body;
+                    const id = req.params.id;
                     const customer = await Customer.findById(id);
                     if (!customer) return res.status(404).json(
                         {
@@ -31,8 +31,8 @@ class CustomerController{
                 }
             
                 add = async (req, res) => {
-                    const { title, description, status, priority } = req.body;
-                    if (!title || !description || !status || !priority) {
+                    const { name, phone, email, address, notes } = req.body;
+                    if (!name || !phone || !email || !address || !notes) {
                        return  res.status(400).json(
                             {
                                 "success": false,
@@ -40,7 +40,8 @@ class CustomerController{
                             }
                         )
                     }
-                    const customerAdd = await Customer.create({ customererName, rating, comment });
+                    
+                    const customerAdd = await Customer.create({ name, phone, email, address, notes });
                     res.status(201).json(
                         {
                             "message": "Operation successful",
@@ -53,7 +54,7 @@ class CustomerController{
                 }
             
                 update = async (req, res) => {
-                    const id = id.params.body;
+                    const id = req.params.id;
                     const customer = await Customer.findById(id);
                     if (!customer) return res.status(404).json(
                         {
@@ -61,9 +62,9 @@ class CustomerController{
                             "message": "Resource not found"
                         }
                     );
-                    const { title, description, status, priority } = req.body;
-                    const date = await Customer.findByIdAndUpdate(id, { title, description, status, priority });
-                    res.status(201).json(
+                    const { name, phone, email, address, notes } = req.body;
+                    const date = await Customer.findByIdAndUpdate(id, { name, phone, email, address, notes });
+                    res.status(200).json(
                         {
                             "message": "Operation successful",
                             "data": date

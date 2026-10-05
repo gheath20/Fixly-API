@@ -12,7 +12,7 @@ class ServiceController {
     }
 
     getOne = async (req, res) => {
-        const id = id.params.body;
+        const id = req.params.id;
         const service = await Service.findById(id);
         if (!service) return res.status(404).json(
             {
@@ -53,7 +53,7 @@ class ServiceController {
     }
 
     update = async (req, res) => {
-        const id = id.params.body;
+        const id = req.params.id;
         const service = await Service.findById(id);
         if (!service) return res.status(404).json(
             {
@@ -63,7 +63,7 @@ class ServiceController {
         );
         const { name, description, price, duration, isAvailable } = req.body;
         const date = await Service.findByIdAndUpdate(id, { name, description, price, duration, isAvailable });
-        res.status(201).json(
+        res.status(200).json(
             {
                 "message": "Operation successful",
                 "data": date
@@ -80,7 +80,7 @@ class ServiceController {
 
     remove = async (req, res) => {
         const id = req.params.id;
-        const service = await User.findById(id);
+        const service = await Service.findById(id);
         if (!service) return res.status(404).json(
             {
                 "success": false,
